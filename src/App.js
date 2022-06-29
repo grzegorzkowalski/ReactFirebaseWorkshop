@@ -1,15 +1,25 @@
-import Hi from "./Hi";
-import ClickTest from "./ClickTest";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+} from "react-router-dom";
+import Home from "./screens/Home";
+import Contact from "./screens/Contact";
+import About from "./screens/About";
+import Navigation from "./components/Navigation";
+import Footer from "./components/Footer";
 
 function App() {
-
-//Zapis funkcyjny
-
   return (
-    <div className="App">
-        <Hi numbers={[1,2,3]} />
-        <ClickTest />
-    </div>
+    <Router>
+        <Navigation />
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/o-nas" element={<About />} />
+          <Route path="/kontakt" element={<Contact />} />
+        </Routes>
+        <Footer />
+    </Router>
   );
 }
 
