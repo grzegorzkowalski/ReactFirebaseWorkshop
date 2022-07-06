@@ -1,21 +1,18 @@
 import {useEffect, useState} from 'react';
-import { auth } from "../firebase";
+import { auth, db } from "../firebase";
 import {
     signInWithEmailAndPassword,
     createUserWithEmailAndPassword,
     signOut,
     onAuthStateChanged
 } from "firebase/auth";
+import { doc, getDoc, getDocs, collection } from "firebase/firestore";
 
 const Home = () => {
     const [userInfo, setUserInfo] = useState("użytkownik niezalogowany");
+    const [data, setData] = useState([]);
     const user = auth.currentUser;
 
-    if (user) {
-        console.log(user);
-    } else {
-        console.log("no user");
-    }
     const register = () => {
         createUserWithEmailAndPassword(auth, "test@wp.pl", "test_1234")
             .then(() => {
@@ -47,9 +44,30 @@ const Home = () => {
         });
     }
 
-    const checkUser = () => {
-        //console.log(firebase)
-    }
+    useEffect(() => {
+        (async () => {
+            if (user) {
+                const querySnapshot = await getDocs(collection(db, "articles"));
+                querySnapshot.forEach((doc) => {
+                    // doc.data() is never undefined for query doc snapshots
+                    console.log(doc.id, " => ", doc.data());
+                    setData((prev) => [...prev, doc.data()]);
+                });
+                // const docRef = doc(db, "articles", "EIfSaVBgyAtvoPYxrYyA");
+                // const docSnap = await getDoc(docRef);
+                //
+                // if (docSnap.exists()) {
+                //     console.log("Document data:", docSnap.data());
+                //     setData(() => [ docSnap.data()]);
+                // } else {
+                //     // doc.data() will be undefined in this case
+                //     console.log("No such document!");
+                // }
+            } else {
+                console.log("no user");
+            }
+        })();
+    }, [userInfo]);
 
     useEffect(() => {
         const unsurscribe = onAuthStateChanged(auth, (user) => {
@@ -65,11 +83,19 @@ const Home = () => {
 
     return (
         <>
+            {
+                data.map(el => {
+                    return <article>
+                        <img alt="panda" src={el.image} />
+                        <h3>{el.title}</h3>
+                        <p>{el.body}</p>
+                    </article>
+                })
+            }
             <h1>{userInfo}</h1>
             <button onClick={register}>Register</button>
             <button onClick={login}>Login</button>
             <button onClick={logOut}>signOut</button>
-            <button onClick={checkUser}>signOut</button>
         </>
     );
 };
