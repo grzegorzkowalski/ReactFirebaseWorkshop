@@ -3,15 +3,17 @@ import {
   Routes,
   Route,
 } from "react-router-dom";
-import Home from "./screens/Home";
-import Contact from "./screens/Contact";
-import About from "./screens/About";
+import { CssBaseline } from "@mui/material";
+import Home from "./pages/Home";
+import Contact from "./pages/Contact";
+import About from "./pages/About";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
 
 function App() {
   return (
     <Router>
+        <CssBaseline />
         <Navigation />
         <Routes>
           <Route path="/" element={<Home />} />
