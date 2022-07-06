@@ -43,6 +43,19 @@ const Home = () => {
             // An error happened.
         });
     }
+    function compare( a, b ) {
+        if ( a.title < b.title ){
+            return -1;
+        }
+        if ( a.title > b.title ){
+            return 1;
+        }
+        return 0;
+    }
+
+    useEffect(() => {
+        console.log(data);
+    }, [data]);
 
     useEffect(() => {
         (async () => {
@@ -84,7 +97,7 @@ const Home = () => {
     return (
         <>
             {
-                data.map(el => {
+                data.sort(compare).map(el => {
                     return <article>
                         <img alt="panda" src={el.image} />
                         <h3>{el.title}</h3>

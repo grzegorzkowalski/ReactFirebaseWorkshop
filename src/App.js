@@ -9,6 +9,7 @@ import Contact from "./pages/Contact";
 import About from "./pages/About";
 import Navigation from "./components/Navigation";
 import Footer from "./components/Footer";
+import AddArticle from "./pages/AddArticle";
 import Register from "./pages/Register";
 import Login from "./pages/Login";
 
@@ -21,8 +22,9 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/o-nas" element={<About />} />
           <Route path="/kontakt" element={<Contact />} />
-          <Route path="/logowanie" element={<Login />} />
-          <Route path="/rejestracja" element={<Register />} />
+            <Route path="/dodaj-artykul" element={<AddArticle />} />
+            <Route path="/logowanie" element={<Login />} />
+            <Route path="/rejestracja" element={<Register />} />
         </Routes>
         <Footer />
     </Router>
